@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanalNet IPTV - Premium TV Streaming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 18px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cta-button:hover {
+            background: #20ba5a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-icon {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        .features {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .channels {
+            padding: 80px 20px;
+            background: white;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        .channel-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .channel-logo {
+            width: 100px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .channel-logo:hover {
+            transform: scale(1.1);
+        }
+
+        .pricing {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: white;
+            color: #333;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.featured {
+            border: 4px solid #FFD700;
+            transform: scale(1.05);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: #FF6B6B;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .price {
+            font-size: 3em;
+            font-weight: 800;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 0.4em;
+            color: #666;
+        }
+
+        .duration {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 30px 0;
+            padding: 0 10px;
+        }
+
+        .features-list li {
+            list-style: none;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: #25D366;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        .order-button {
+            display: block;
+            background: #25D366;
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .order-button:hover {
+            background: #20ba5a;
+            transform: scale(1.05);
+        }
+
+        .testimonials {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .stars {
+            color: #FFD700;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            background: #2d3436;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="logo">KanalNet IPTV</div>
+            <h1>Premium IPTV Streaming</h1>
+            <p>18,000+ Channels | Movies & Series | 4K Quality | 24/7 Support</p>
+            <a href="https://wa.me/212778808531?text=Hello!%20I%27m%20interested%20in%20IPTV%20subscription" class="cta-button">
+                <span class="whatsapp-icon">📱</span>Order Now on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose KanalNet IPTV?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📺</div>
+                    <h3>18,000+ Channels</h3>
+                    <p>Access channels from around the world in multiple languages</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Movies & Series</h3>
+                    <p>Unlimited VOD library with latest releases</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Ultra HD Quality</h3>
+                    <p>Crystal clear 4K streaming with no buffering</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Multi-Device</h3>
+                    <p>Watch on Smart TV, Phone, Tablet, PC</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Stable</h3>
+                    <p>99.9% uptime with anti-freeze technology</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>24/7 Support</h3>
+                    <p>Instant support via WhatsApp anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="channels">
+        <div class="container">
+            <h2 class="section-title">Popular Channels Included</h2>
+            <p class="section-subtitle">Watch your favorite channels from around the world</p>
+            <div class="channel-logos">
+                <div class="channel-logo">beIN SPORTS</div>
+                <div class="channel-logo">SKY Sports</div>
+                <div class="channel-logo">ESPN</div>
+                <div class="channel-logo">HBO</div>
+                <div class="channel-logo">Netflix</div>
+                <div class="channel-logo">Discovery</div>
+                <div class="channel-logo">National Geographic</div>
+                <div class="channel-logo">BBC</div>
+                <div class="channel-logo">CNN</div>
+                <div class="channel-logo">FOX</div>
+                <div class="channel-logo">Cartoon Network</div>
+                <div class="channel-logo">DAZN</div>
+                <div class="channel-logo">Eurosport</div>
+                <div class="channel-logo">MTV</div>
+                <div class="channel-logo">Disney+</div>
+                <div class="channel-logo">& 18,000+ More!</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <p class="section-subtitle">Flexible pricing to suit your needs</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Monthly</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <div class="duration">1 Month Access</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>1 Device</li>
+                        <li>24/7 Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%20Monthly%20Plan%20($19)" class="order-button">Order Now</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>3 Months</h3>
+                    <div class="price">$29<span>/3 months</span></div>
+                    <div class="duration">Save $28</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>1 Device</li>
+                        <li>24/7 Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%203%20Months%20Plan%20($29)" class="order-button">Order Now</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>6 Months</h3>
+                    <div class="price">$39<span>/6 months</span></div>
+                    <div class="duration">Save $75</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>1 Device</li>
+                        <li>24/7 Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%206%20Months%20Plan%20($39)" class="order-button">Order Now</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="badge">🔥 BEST VALUE</div>
+                    <h3>12 Months</h3>
+                    <div class="price">$59<span>/year</span></div>
+                    <div class="duration">Save $169</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>1 Device</li>
+                        <li>24/7 Priority Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%2012%20Months%20Plan%20($59)" class="order-button">Order Now</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="badge">⭐ SPECIAL OFFER</div>
+                    <h3>Premium Duo</h3>
+                    <div class="price">$89<span>/year</span></div>
+                    <div class="duration">2 Devices Included</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>2 Simultaneous Devices</li>
+                        <li>24/7 Priority Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%20Premium%20Duo%20Plan%20($89)" class="order-button">Order Now</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="badge">🎁 BONUS DEAL</div>
+                    <h3>Extended Year</h3>
+                    <div class="price">$79<span>/15 months</span></div>
+                    <div class="duration">12 Months + 3 FREE</div>
+                    <ul class="features-list">
+                        <li>18,000+ Live Channels</li>
+                        <li>Unlimited VOD</li>
+                        <li>4K/HD/FHD Quality</li>
+                        <li>1 Device</li>
+                        <li>24/7 Priority Support</li>
+                    </ul>
+                    <a href="https://wa.me/212778808531?text=I%27d%20like%20to%20order%20the%20Extended%20Year%20Plan%20($79)" class="order-button">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Amazing service! Crystal clear quality and no buffering. Customer support is super responsive on WhatsApp. Highly recommended!"</p>
+                    <strong>- Ahmed M.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Best IPTV I've tried. The channel selection is incredible and the price is unbeatable. Setup was super easy!"</p>
+                    <strong>- Sarah K.</strong>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"I've been using KanalNet for 6 months now. Stable connection, great quality, and excellent customer service. Worth every penny!"</p>
+                    <strong>- Mohamed R.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3>Ready to Start Streaming?</h3>
+            <p style="margin: 20px 0;">Contact us on WhatsApp for instant activation</p>
+            <a href="https://wa.me/212778808531?text=Hello!%20I%27m%20interested%20in%20IPTV%20subscription" class="cta-button">
+                <span class="whatsapp-icon">📱</span>Chat on WhatsApp
+            </a>
+            <p style="margin-top: 40px; opacity: 0.7;">© 2025 kanalnetiptv.de - Premium IPTV Services</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/212778808531?text=Hello!%20I%27m%20interested%20in%20IPTV%20subscription" class="whatsapp-float" title="Chat on WhatsApp">
+        💬
+    </a>
+</body>
+</html>
